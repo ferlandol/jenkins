@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        REPO_URL = 'https://github.com/devops-curso-2024/ci-cd-lab.git'
+        REPO_URL = 'https://github.com/ferlandol/jenkins.git'
         IMAGE_NAME = 'my-flask-app'
     }
     
