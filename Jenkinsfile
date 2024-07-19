@@ -12,20 +12,21 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'docker build -t ${IMAGE_NAME}:${env.BUILD_NUMBER} .'
+                sh "docker build -t ${IMAGE_NAME}:${env.BUILD_NUMBER} ."
             }
         }
         stage('Run') {
             steps {
-                sh '''
-                if docker ps -a | grep ${IMAGE_NAME}; then
-                  docker stop ${IMAGE_NAME}
-                  docker rm ${IMAGE_NAME}
-                fi
-                docker run -d --name ${IMAGE_NAME} -p 5000:5000 ${IMAGE_NAME}:${env.BUILD_NUMBER}
-                '''
+                script {
+                    sh '''
+                    if docker ps -a | grep "${IMAGE_NAME}"; then
+                      docker stop "${IMAGE_NAME}"
+                      docker rm "${IMAGE_NAME}"
+                    fi
+                    docker run -d --name "${IMAGE_NAME}" -p 5000:5000 "${IMAGE_NAME}:${env.BUILD_NUMBER}"
+                    '''
+                }
             }
         }
     }
 }
-
